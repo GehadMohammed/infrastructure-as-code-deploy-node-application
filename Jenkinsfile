@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'environment', defaultValue: 'terraform', description: 'Workspace/environment file to use for deployment')
+        string(name: 'environment', defaultValue: 'DEV', description: 'Workspace/environment file to use for deployment')
        
     }
 
@@ -20,7 +20,7 @@ pipeline {
                  script{
                         dir("terraform")
                         {
-                            git "https://github.com/troy-ingram/week-24-project.git"
+                            git "git@github.com:GehadMohammed/IAC.git"
                         }
                     }
                 }
@@ -29,18 +29,19 @@ pipeline {
         stage('Plan') {
           
             steps {
-                sh 'terraform init -input=false'
-                sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
+                sh 'terraform init'
+                sh 'terraform workspace select ${environment}'
 
-                sh "terraform plan -input=false -out tfplan "
-                sh 'terraform show -no-color tfplan > tfplan.txt'
+                sh "terraform plan "
+                sh 'terraform show  > tfplan.txt'
             }
         }
        
         stage('Apply') {
         
             steps {
-                sh "terraform apply -input=false tfplan"
+
+                sh "terraform apply -var-file dev.tfvars -input=false "
             }
         }
 
