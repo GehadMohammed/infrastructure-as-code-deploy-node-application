@@ -41,7 +41,7 @@ pipeline {
         
             steps {
 
-                sh "terraform apply -var-file  IAC/dev.tfvars -input=false -"
+                sh "terraform apply -var-file /var/jenkins_home/workspace/infrastructure-configuration-deploy-node-app/IAC/dev.tfvars -input=false -"
             }
         }
 
