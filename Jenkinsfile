@@ -30,7 +30,7 @@ pipeline {
           
             steps {
                 sh 'terraform init -reconfigure'
-                sh 'terraform workspace select ${environment}'
+                sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
 
                 sh "terraform plan "
                 sh 'terraform show  > tfplan.txt'
