@@ -32,8 +32,8 @@ pipeline {
                 sh 'terraform init -reconfigure'
                 sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
 
-                sh "terraform plan "
-                sh 'terraform show  > tfplan.txt'
+                sh "terraform plan -var-file dev.tfvars  "
+                sh 'terraform show  -var-file dev.tfvars  > tfplan.txt'
             }
         }
        
@@ -41,7 +41,7 @@ pipeline {
         
             steps {
 
-                sh "terraform apply -var-file /var/jenkins_home/workspace/infrastructure-configuration-deploy-node-app/IAC/dev.tfvars -input=false -"
+                sh "terraform apply -var-file dev.tfvars -input=false --auto-approve "
             }
         }
 
