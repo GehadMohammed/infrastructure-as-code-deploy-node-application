@@ -15,16 +15,16 @@ pipeline {
 
 
     stages {
-        stage('checkout') {
-//             steps {
-//                  script{
-//                         dir("terraform")
-//                         {
-//                             git "git@github.com:GehadMohammed/IAC.git"
-//                         }
-//                     }
-//                 }
-//             }
+//             stage('checkout') {
+    //             steps {
+    //                  script{
+    //                         dir("terraform")
+    //                         {
+    //                             git "git@github.com:GehadMohammed/IAC.git"
+    //                         }
+    //                     }
+    //                 }
+    //             }
 
         stage('Plan') {
           
