@@ -41,7 +41,7 @@ pipeline {
         
             steps {
 
-                sh "terraform apply -var-file dev.tfvars -input=false -"
+                sh "terraform apply -var-file  IAC/dev.tfvars -input=false -"
             }
         }
 
