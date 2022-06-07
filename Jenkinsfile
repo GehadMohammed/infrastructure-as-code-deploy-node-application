@@ -29,7 +29,7 @@ pipeline {
         stage('Plan') {
           
             steps {
-                sh 'terraform init'
+                sh 'terraform init -reconfigure'
                 sh 'terraform workspace select ${environment}'
 
                 sh "terraform plan "
@@ -41,7 +41,7 @@ pipeline {
         
             steps {
 
-                sh "terraform apply -var-file dev.tfvars -input=false "
+                sh "terraform apply -var-file dev.tfvars -input=false -"
             }
         }
 
