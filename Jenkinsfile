@@ -15,25 +15,26 @@ pipeline {
 
 
     stages {
-        stage('checkout') {
-            steps {
-                 script{
-                        dir("terraform")
-                        {
-                            git "git@github.com:GehadMohammed/IAC.git"
-                        }
-                    }
-                }
-            }
+//             stage('checkout') {
+    //             steps {
+    //                  script{
+    //                         dir("terraform")
+    //                         {
+    //                             git "git@github.com:GehadMohammed/IAC.git"
+    //                         }
+    //                     }
+    //                 }
+    //             }
 
         stage('Plan') {
           
             steps {
-                sh 'terraform init'
-                sh 'terraform workspace select ${environment}'
+                sh 'pwd'
+                sh 'terraform init -reconfigure'
+                sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
 
-                sh "terraform plan "
-                sh 'terraform show  > tfplan.txt'
+                sh "terraform plan -var-file IAC/dev.tfvars  "
+                sh 'terraform show  -var-file IAC/dev.tfvars  > tfplan.txt'
             }
         }
        
@@ -41,7 +42,7 @@ pipeline {
         
             steps {
 
-                sh "terraform apply -var-file dev.tfvars -input=false "
+                sh "terraform apply -var-file IAC/dev.tfvars -input=false --auto-approve "
             }
         }
 

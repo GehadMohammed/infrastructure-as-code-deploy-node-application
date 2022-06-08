@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "backend-tf-g"
+    bucket = "backend-jenkines"
     key    = "terraform"
     region = "us-east-1"
     # access_key="AKIA5FN7V27KIV5SL26R"
