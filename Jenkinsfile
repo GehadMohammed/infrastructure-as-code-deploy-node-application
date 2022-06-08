@@ -30,7 +30,7 @@ pipeline {
           
             steps {
                 sh 'pwd'
-                sh 'terraform -shdir=terraform init -reconfigure'
+                sh 'terraform -shdir=terraform  init -reconfigure'
                 sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
 
                 sh "terraform plan shdir=terraform init -var-file IAC/dev.tfvars  "
