@@ -4,7 +4,7 @@ resource "tls_private_key" "tls-private-key" {
 }
 
 resource "aws_key_pair" "key-pair" {
-  key_name   = "keypair"
+  key_name   = "keypair-gahoda"
   public_key = tls_private_key.tls-private-key.public_key_openssh
   tags = {
     Name = "keypair"
@@ -12,7 +12,7 @@ resource "aws_key_pair" "key-pair" {
 }
 # Creates and stores ssh key used creating an EC2 instance
 resource "aws_secretsmanager_secret" "secretsmanager-01-gehad" {
-  name = "secretsmanager-gehad-prod"
+  name = "secretsmanager-gehad"
 }
 
 resource "aws_secretsmanager_secret_version" "example" {
