@@ -1,5 +1,5 @@
 name="pod"
-env_region= "us-east-1"
+env_region= "eu-west-1"
 vpc-01-cidr-block="193.0.0.0/16"
 public-subnet-01-cidr_block="193.0.1.0/24"
 public-subnet-02-cidr_block="193.0.2.0/24"
