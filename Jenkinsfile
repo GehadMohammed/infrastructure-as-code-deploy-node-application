@@ -32,7 +32,7 @@ pipeline {
                 sh 'pwd'
                 sh 'terraform -chdir=terraform/  init -reconfigure'
                 sh 'terraform -chdir=terraform/  workspace select ${environment} || terraform -chdir=terraform/  workspace new ${environment}'
-                sh "terraform  -chdir=terraform/  plan -var-file dev.tfvars"
+                // sh "terraform  -chdir=terraform/  plan -var-file dev.tfvars"
             }
         }
        
