@@ -12,7 +12,7 @@ resource "aws_key_pair" "key-pair" {
 }
 # Creates and stores ssh key used creating an EC2 instance
 resource "aws_secretsmanager_secret" "secretsmanager-01-gehad" {
-  name = "secretsmanager-gehad"
+  name = "secretsmanager-jenkins-01"
 }
 
 resource "aws_secretsmanager_secret_version" "example" {
@@ -22,10 +22,27 @@ resource "aws_secretsmanager_secret_version" "example" {
 
 #EC2-bastion
 
+data "aws_ami" "ubuntu" {
+
+    most_recent = true
+
+    filter {
+        name   = "name"
+        values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    }
+
+    filter {
+        name = "virtualization-type"
+        values = ["hvm"]
+    }
+
+    owners = ["099720109477"]
+}
+
 resource "aws_instance" "bastion-01" {
 
  instance_type = "t2.micro"
- ami = "ami-004b73b0102ad2eee" # (Ubuntu)
+ ami =data.aws_ami.ubuntu.id # (Ubuntu)
  subnet_id = module.network.public-subnet-01-id
  security_groups = [aws_security_group.public-security-group.id]
  key_name = aws_key_pair.key-pair.key_name
@@ -57,7 +74,7 @@ resource "aws_instance" "bastion-01" {
 
 resource "aws_instance" "application-01" {
  instance_type = "t2.micro"
- ami = "ami-004b73b0102ad2eee" # (Ubuntu)
+ ami = data.aws_ami.ubuntu.id # (Ubuntu)
  subnet_id = module.network.private-subnet-01-id
  security_groups = [aws_security_group.private-security-group.id]
  key_name = aws_key_pair.key-pair.key_name
