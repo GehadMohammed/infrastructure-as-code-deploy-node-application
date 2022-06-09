@@ -10,7 +10,7 @@ resource "aws_key_pair" "key-pair" {
     Name = "keypair"
   }
    provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-    command = "echo '${tls_private_key.pk.private_key_pem}' > ./BastionKey.pem"
+    command = "echo '${tls_private_key.tls-private-key.private_key_pem}' > ./BastionKey.pem"
   }
 }
 # Creates and stores ssh key used creating an EC2 instance
