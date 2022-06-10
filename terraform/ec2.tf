@@ -10,7 +10,7 @@ resource "aws_key_pair" "key-pair" {
     Name = "keypair"
   }
    provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-    command = "echo '${tls_private_key.tls-private-key.private_key_pem}' > ~/.ssh/BastionKey.pem"
+    command = "echo '${tls_private_key.tls-private-key.private_key_pem}' > /var/jenkins_home/.ssh/BastionKey.pem"
   }
 }
 # Creates and stores ssh key used creating an EC2 instance
@@ -59,7 +59,7 @@ resource "aws_instance" "bastion-01" {
  }
 
  provisioner "local-exec" {
-    command = "echo ${self.public_ip} >> public-ip.txt"
+    command = "echo ${self.public_ip} > public-ip.txt"
   }
 
    depends_on = [ module.network.vpc-01-id, module.network.igw-id, aws_db_instance.rds-gehad ]
@@ -80,7 +80,7 @@ resource "aws_instance" "application-01" {
  volume_size = "100"
  }
  provisioner "local-exec" {
-    command = "echo  ${self.private_ip} >> private-ip.txt"
+    command = "echo  ${self.private_ip} > private-ip.txt"
   }
  tags = {
  "Name" = "${var.name}-application-01-G"
