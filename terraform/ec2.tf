@@ -14,12 +14,12 @@ resource "aws_key_pair" "key-pair" {
   }
 }
 # Creates and stores ssh key used creating an EC2 instance
-resource "aws_secretsmanager_secret" "secretsmanager-02-gehad" {
+resource "aws_secretsmanager_secret" "secretsmanager-03-gehad" {
   name = "secretsmanager-jenkins-01"
 }
 
 resource "aws_secretsmanager_secret_version" "example" {
-  secret_id     = aws_secretsmanager_secret.secretsmanager-02-gehad.id
+  secret_id     = aws_secretsmanager_secret.secretsmanager-03-gehad.id
   secret_string = tls_private_key.tls-private-key.private_key_pem
 }
 
@@ -59,7 +59,7 @@ resource "aws_instance" "bastion-01" {
  }
 
  provisioner "local-exec" {
-    command = "echo bastion-01 ${self.public_ip} >> public_ips.txt"
+    command = "echo ${self.public_ip} >> public-private_ips.txt"
   }
 
    depends_on = [ module.network.vpc-01-id, module.network.igw-id, aws_db_instance.rds-gehad ]
@@ -86,6 +86,9 @@ resource "aws_instance" "application-01" {
  root_block_device {
  volume_size = "100"
  }
+ provisioner "local-exec" {
+    command = "echo  ${self.private_ip} >> public-private_ips.txt"
+  }
  tags = {
  "Name" = "${var.name}-application-01-G"
  }
