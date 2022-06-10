@@ -11,7 +11,7 @@ resource "null_resource" "out" {
   }
 
     provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-    command = "echo '${tls_private_key.tls-private-key.private_key_pem}' > /var/jenkins_home/.ssh/BastionKey.pem"
+    command = "echo '${tls_private_key.tls-private-key.private_key_pem}' > /var/jenkins_home/.ssh/BastionKey.pem && chmod 600 /var/jenkins_home/.ssh/BastionKey.pem"
   }
   
 }
