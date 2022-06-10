@@ -56,7 +56,7 @@ resource "aws_instance" "bastion-01" {
  "Name" = "${var.name}-bastion-01-G"
  }
 
-   depends_on = [ module.network.vpc-01-id, module.network.igw-id, aws_db_instance.rds-gehad ]
+   depends_on = [ module.network.vpc-01-id, module.network.igw-id, aws_db_instance.rds-gehad-01 ]
 
 }
 
