@@ -39,8 +39,8 @@ pipeline {
         stage('Apply') {
         
             steps {
- sh "terraform  -chdir=terraform/ destroy -var-file dev.tfvars -input=false -auto-approve "
-//                 sh "terraform  -chdir=terraform/ apply -var-file dev.tfvars -input=false -auto-approve "
+//  sh "terraform  -chdir=terraform/ destroy -var-file dev.tfvars -input=false -auto-approve "
+                sh "terraform  -chdir=terraform/ apply -var-file dev.tfvars -input=false -auto-approve "
             }
         }
 
