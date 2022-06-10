@@ -39,8 +39,15 @@ pipeline {
         stage('Apply') {
         
             steps {
-//  sh "terraform  -chdir=terraform/ destroy -var-file dev.tfvars -input=false -auto-approve "
+            //  sh "terraform  -chdir=terraform/ destroy -var-file dev.tfvars -input=false -auto-approve "
+                sh "echo build infrastructure on aws"
+                
                 sh "terraform  -chdir=terraform/ apply -var-file dev.tfvars -input=false -auto-approve "
+                
+                sh "echo configure ssh file to allow jenkins master ssh private instance host our application"
+                
+                sh "chmod +x scripts/jump-host-ssh.sh"
+                sh "./scripts/jump-host-ssh.sh"
             }
         }
 
