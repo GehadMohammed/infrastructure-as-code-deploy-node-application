@@ -26,7 +26,7 @@ pipeline {
     //                 }
     //             }
 
-        stage('Plan') {
+        stage('Terraform Plan') {
           
             steps {
                 sh 'pwd'
@@ -36,13 +36,13 @@ pipeline {
             }
         }
        
-        stage('Apply') {
+        stage('build infrastructure') {
         
             steps {
             //  sh "terraform  -chdir=terraform/ destroy -var-file dev.tfvars -input=false -auto-approve "
                 sh "echo build infrastructure on aws"
                 
-                sh "terraform  -chdir=terraform/ apply -var-file dev.tfvars -input=false -auto-approve "
+                sh "terraform  -chdir=terraform/ apply -var-file ${environment}.tfvars -input=false -auto-approve "
                 
                 sh "echo configure ssh file to allow jenkins master ssh private instance host our application"
                 
@@ -50,6 +50,16 @@ pipeline {
                 sh "./scripts/jump-host-ssh.sh"
             }
         }
-
+stage('slave-configurtion') {
+           steps {
+               script {
+                dir("${env.WORKSPACE}/ansible/"){
+                        echo 'configure slave -private instance- as jenkins slave using ansible'
+                        sh 'ansible-playbook playbook.yaml -i inventory'
+                       
+                    }
+               }
+            }
+        }
   }
 }
