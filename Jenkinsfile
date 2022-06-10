@@ -39,7 +39,7 @@ pipeline {
         stage('build infrastructure') {
         
             steps {
-              sh "terraform  -chdir=terraform/ destroy -var-file dev.tfvars -input=false -auto-approve "
+              sh "terraform  -chdir=terraform/ destroy -var-file ${environment}.tfvars -input=false -auto-approve "
                 // sh "echo build infrastructure on aws"
                 
                 // sh "terraform  -chdir=terraform/ apply -var-file ${environment}.tfvars -input=false -auto-approve "
