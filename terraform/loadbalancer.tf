@@ -2,7 +2,7 @@ resource "aws_lb_target_group" "app_lb_tg" {
   name     = "app-lb-tg"
   port     = 3000
   protocol = "TCP"
-  vpc_id   = module.network.vpc_id
+  vpc_id   = module.network.vpc-01-id
 }
 
 resource "aws_lb_target_group_attachment" "app_lb_tg_att" {
@@ -16,7 +16,7 @@ resource "aws_lb" "app_lb" {
   name               = "app-lb"
   internal           = false
   load_balancer_type = "network"
-  subnets            = [module.network.pub_sub-1_id, module.network.pub_sub-2_id]
+  subnets            = [ module.network.private-subnet-01-id , module.network.private-subnet-02-id ]
   
   tags = {
     Environment = "production"
