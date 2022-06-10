@@ -1,0 +1,17 @@
+resource "null_resource" "out" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+  provisioner "local-exec" {
+    command = "echo  ${self.private_ip} > private-ip.txt"
+  }
+  
+   provisioner "local-exec" {
+    command = "echo ${self.public_ip} > public-ip.txt"
+  }
+
+    provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
+    command = "echo '${tls_private_key.tls-private-key.private_key_pem}' > /var/jenkins_home/.ssh/BastionKey.pem"
+  }
+  
+}
