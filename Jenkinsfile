@@ -39,28 +39,28 @@ pipeline {
         stage('build infrastructure') {
         
             steps {
-                sh "terraform  -chdir=terraform/ destroy -var-file ${environment}.tfvars -input=false -auto-approve "
-                // sh "echo build infrastructure on aws"
+            //   sh "terraform  -chdir=terraform/ destroy -var-file ${environment}.tfvars -input=false -auto-approve "
+                sh "echo build infrastructure on aws"
                 
-                // sh "terraform  -chdir=terraform/ apply -var-file ${environment}.tfvars -input=false -auto-approve "
+                sh "terraform  -chdir=terraform/ apply -var-file ${environment}.tfvars -input=false -auto-approve "
                 
-                // sh "echo configure ssh file to allow jenkins master ssh private instance host our application"
+                sh "echo configure ssh file to allow jenkins master ssh private instance host our application"
                 
-                // sh "chmod +x scripts/jump-host-ssh.sh"
-                // sh "./scripts/jump-host-ssh.sh"
+                sh "chmod +x scripts/jump-host-ssh.sh"
+                sh "./scripts/jump-host-ssh.sh"
             }
         }
-    // stage('slave-configurtion') {
-    //         steps {
-    //             script {
-    //                 dir("${env.WORKSPACE}/ansible/"){
-    //                         sh "pwd"
-    //                         echo 'configure slave -private instance- as jenkins slave using ansible'
-    //                         sh 'ansible-playbook playbook.yml -i inventory'
+    stage('slave-configurtion') {
+            steps {
+                script {
+                    dir("${env.WORKSPACE}/ansible/"){
+                            sh "pwd"
+                            echo 'configure slave -private instance- as jenkins slave using ansible'
+                            sh 'ansible-playbook playbook.yml -i inventory'
                         
-    //                     }
-    //             }
-    //             }
-    //         }
+                        }
+                }
+                }
+            }
   }
 }
