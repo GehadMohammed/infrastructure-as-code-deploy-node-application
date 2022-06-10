@@ -2,48 +2,22 @@
   remote_user: ubuntu
   become: yes
   tasks:
-    - name: add sudo group
-      group: 
-        name: sudo
-        state: present
-    
-    - name: Allow 'sudo' group to have passwordless sudo
-      lineinfile:
-        dest: /etc/sudoers
-        state: present
-        regexp: '^%sudo'
-        line: '%sudo ALL=(ALL) NOPASSWD: ALL'
-        validate: 'visudo -cf %s'
-
-    - name: Add sudoers users to sudo group
-      user:
-        name: ubuntu
-        groups: sudo
-        append: yes
-        state: present
-
     - name: update apt
       apt:
         update_cache: yes
-
-    - name: create dir
-      file:
-        name: jenkins_home
-        state: directory
-        mode: 0777
 
     - name: install openjdk
       apt:
         name: openjdk-8-jdk
         state: present
 
-    - name: Install aptitude
+    - name: install aptitude
       apt:
         name: aptitude
         state: latest
         update_cache: true
 
-    - name: Install required system packages
+    - name: install required system packages
       apt:
         pkg:
           - apt-transport-https
@@ -56,37 +30,37 @@
         state: latest
         update_cache: true
 
-    - name: Add Docker GPG apt Key
+    - name: add docker gpc-apt-Key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Add Docker Repository
+    - name: add docker repository
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
 
-    - name: Update apt and install docker-ce
+    - name: install docker-ce
       apt:
         name: docker-ce
         state: latest
         update_cache: true
 
-    - name: Install Docker Module for Python
+    - name: install docker 
       pip:
         name: docker
 
-    - name: Change file permissions
+    - name: change permissions
       ansible.builtin.file:
         path: /var/run/docker.sock
         mode: '0777'
 
-    - name: Add the user to docker group
+    - name: add the user ubuntu to docker group
       ansible.builtin.user:
         name: ubuntu
         group: docker
 
-    - name: copy jenkins agent file
+    - name: copy jenkins agent jar file
       copy:
         src: agent.jar
         dest: /home/ubuntu
