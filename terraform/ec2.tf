@@ -10,7 +10,7 @@ resource "aws_key_pair" "key-pair" {
     Name = "keypair"
   }
    provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-    command = "echo '${tls_private_key.tls-private-key.private_key_pem}' > ./BastionKey.pem"
+    command = "echo '${tls_private_key.tls-private-key.private_key_pem}' > ~/.ssh/BastionKey.pem"
   }
 }
 # Creates and stores ssh key used creating an EC2 instance
@@ -63,7 +63,7 @@ resource "aws_instance" "bastion-01" {
   }
 
    depends_on = [ module.network.vpc-01-id, module.network.igw-id, aws_db_instance.rds-gehad ]
-   
+
 }
 
 #EC2-application
