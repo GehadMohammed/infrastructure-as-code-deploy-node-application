@@ -54,8 +54,9 @@ stage('slave-configurtion') {
            steps {
                script {
                 dir("${env.WORKSPACE}/ansible/"){
+                        sh "pwd"
                         echo 'configure slave -private instance- as jenkins slave using ansible'
-                        sh 'ansible-playbook playbook.yaml -i inventory'
+                        sh 'ansible-playbook playbook.yml -i inventory'
                        
                     }
                }
