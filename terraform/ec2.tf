@@ -63,14 +63,7 @@ resource "aws_instance" "bastion-01" {
   }
 
    depends_on = [ module.network.vpc-01-id, module.network.igw-id, aws_db_instance.rds-gehad ]
-
-    user_data = <<EOF
-    #!/bin/sh
-    sudo apt-get update
-    sudo apt-get install -y mysql-client
-    echo ${aws_db_instance.rds-gehad.address} >/tmp/dbdomain.txt
-    sudo mv /tmp/dbdomain.txt /dbdomain.txt
-    EOF
+   
 }
 
 #EC2-application
