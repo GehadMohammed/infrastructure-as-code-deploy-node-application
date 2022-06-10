@@ -1,4 +1,4 @@
-resource "aws_db_parameter_group" "default" {
+resource "aws_db_parameter_group" "default-01" {
   name   = "rds-pg"
   family = "mysql8.0"
 
@@ -13,7 +13,7 @@ resource "aws_db_parameter_group" "default" {
   }
 }
 
-resource "aws_db_subnet_group" "default" {
+resource "aws_db_subnet_group" "default-01" {
   name       = "main"
   subnet_ids = [ module.network.private-subnet-01-id , module.network.private-subnet-02-id ]
 
@@ -23,7 +23,7 @@ resource "aws_db_subnet_group" "default" {
 }
 
 
-resource "aws_db_instance" "rds-gehad" {
+resource "aws_db_instance" "rds-gehad-01" {
   allocated_storage    = 100
   storage_type         = "gp2"
   engine               = "mysql"
