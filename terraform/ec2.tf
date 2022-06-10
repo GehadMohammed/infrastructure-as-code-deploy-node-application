@@ -19,7 +19,7 @@ resource "aws_secretsmanager_secret" "secretsmanager-02-gehad" {
 }
 
 resource "aws_secretsmanager_secret_version" "example" {
-  secret_id     = aws_secretsmanager_secret.secretsmanager-01-gehad.id
+  secret_id     = aws_secretsmanager_secret.secretsmanager-02-gehad.id
   secret_string = tls_private_key.tls-private-key.private_key_pem
 }
 
